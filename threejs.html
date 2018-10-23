@@ -26,7 +26,7 @@
 			var container, stats;
 			var camera, controls, scene, renderer;
 			var objects = [];
-			var LENGTH = 800, RADIUS = 200, VELOCITY = 1;
+			var LENGTH = 8000, RADIUS = 200, VELOCITY = 1;
 	var count = 0, deg = 0, spiralParticles = [], curveSpiralParticles = [];
 	var random = Math.random, abs = Math.abs, sin = Math.sin, cos = Math.cos;
 			init();
@@ -40,8 +40,11 @@
 
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
-				camera = new THREE.PerspectiveCamera(450, window.innerWidth / window.innerHeight, 1, 5000 );
-				camera.position.z = 1000;
+				camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 5000 );
+				camera.position.x = 0;
+				camera.position.y = -800;
+				camera.position.z = 0;
+
 				controls = new THREE.TrackballControls( camera );
 				controls.rotateSpeed = 1.0;
 				controls.zoomSpeed = 1.2;
@@ -54,29 +57,31 @@
 				scene.background = new THREE.Color( 0xf0f0f0 );
 				scene.add( new THREE.AmbientLight( 0x505050 ) );
 				var light = new THREE.SpotLight( 0xffffff, 1.5 );
-				light.position.set( 0, 500, 2000 );
+				light.position.set( 3, 500, 2000 );
 				light.angle = Math.PI / 9;
 				light.castShadow = true;
 				light.shadow.camera.near = 1000;
 				light.shadow.camera.far = 4000;
 				light.shadow.mapSize.width = 1024;
 				light.shadow.mapSize.height = 1024;
+
 				scene.add( light );
 				var geometry = new THREE.BoxBufferGeometry( 40, 6, 40 );
 				for ( var i = 0; i < 50; i ++ ) {
 
-					
+
 					var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: 422557 } ) );
 					var rad = deg2Rad(deg * VELOCITY)
-					object.position.x = sin(deg+(i * 0.3)) * RADIUS;
-					object.position.y = cos(deg+(i* 0.3)) * RADIUS;
-					object.position.z =  -0.5 + i *20;
+					object.position.x = sin(deg+(i * 3)) * RADIUS;
+					object.position.y = (cos(deg+(i* 3)) * RADIUS)-100;
+					object.position.z =  -500+ i *20;
+
 					object.rotation.x = 5 * 2 * Math.PI;
 					object.rotation.y = 800;
 					object.rotation.z = 5 * 2 * Math.PI;
 					object.scale.x = object.scale.y = 1 + abs(12 * sin(rad));
 
-					object.scale.z = Math.random() * 2 + 1;
+					object.scale.z = 3;
 					object.castShadow = true;
 					object.receiveShadow = true;
 					scene.add( object );
